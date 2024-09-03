@@ -1,13 +1,85 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.row {
+  display: flex;
+}
+.square {
+  border: 1px solid gray;
+  height: 150px;
+  width: 150px;
+  cursor: pointer;
+}
+.check {
+  height: 150px;
+  width: 150px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.resetBtn {
+  height: 50px;
+  width: 200px;
+  background-color: #002b48;
+  color: #ffffff;
+  border-radius: 25px;
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+}
+.scoresNum{
+  display: flex;
+  width: 300px;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 10px;
+  margin-bottom: 25px;
+}
+.scoreBoard{
+  display: flex;
+  width: 300px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 120px;
+  font-weight: bold;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin-bottom: 30px;
+  color: #7e8305;
+}
+.scoreBoard h1{
+  margin: 0;
+}
+.endgame{
+  font-size: 36px;
+  color:#002b48
 }
