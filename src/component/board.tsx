@@ -11,13 +11,6 @@ const Board: React.FC<GameBoardProps> = ({ mode }) => {
   const [currentMove, setCurrentMove] = useState("X");
   const [draw, setDraw] = useState(false);
   const [winner, setWinner] = useState(null);
-  const [score, setScore] = useState({ xScore: 0, oScore: 0 });
-  const [history, setHistory] = useState([Array(9).fill(null)]);
-  const handleHistory = (moveIndex: number) => {
-    setSquares(history[moveIndex]);
-    setCurrentMove(moveIndex % 2 === 0 ? "X" : "O");
-    setHistory(history.slice(0, moveIndex + 1));
-  };
 
   const checkWinner = () => {
     const win = [
@@ -101,7 +94,7 @@ const Board: React.FC<GameBoardProps> = ({ mode }) => {
 
       setTimeout(() => {
         if (move !== null) {
-          handleClick(move);
+          handleMove(move);
         }
       }, 500);
     }
@@ -120,43 +113,24 @@ const Board: React.FC<GameBoardProps> = ({ mode }) => {
     }
   });
 
-  useEffect(() => {
-    const checkScore = checkWinner();
-    if (checkScore) {
-      if (checkScore.toLowerCase() === "o") {
-        let { oScore } = score;
-        oScore += 1;
-        setScore({ ...score, oScore });
-      } else {
-        let { xScore } = score;
-        xScore += 1;
-        setScore({ ...score, xScore });
-      }
-    }
-  }, [winner]);
-
-  const handleClick = (index: number) => {
+  const handleMove = (index: number) => {
     const nextMove = Array.from(squares);
 
     if (nextMove[index] !== null) return;
     nextMove[index] = currentMove;
     setSquares(nextMove);
-    setHistory(history.concat([nextMove]));
 
     setCurrentMove(currentMove === "X" ? "O" : "X");
   };
 
   const handleReset = () => {
     setSquares(Array(9).fill(null));
-    setHistory([Array(9).fill(null)]);
     setCurrentMove("X");
     setDraw(false);
     setWinner(null);
-    setScore({ oScore: 0, xScore: 0 });
   };
   const playAgain = () => {
     setSquares(Array(9).fill(null));
-    setHistory([Array(9).fill(null)]);
     setCurrentMove("X");
     setDraw(false);
     setWinner(null);
@@ -166,19 +140,6 @@ const Board: React.FC<GameBoardProps> = ({ mode }) => {
     <div className="container">
       {" "}
       <h1>Tic-Tac-Toe </h1>
-      <div className="scoreBoard">
-        <div>
-          <h1>Score Board</h1>
-        </div>
-        <div className="scoresNum">
-          <div>
-            <p style={{ color: "#b61818" }}>O - {score.oScore}</p>
-          </div>
-          <div>
-            <p style={{ color: "#2757bc" }}>X - {score.xScore}</p>
-          </div>
-        </div>
-      </div>
       {winner ? (
         <div>
           <p className="endgame"> {winner} Player won the game!</p>
@@ -187,67 +148,43 @@ const Board: React.FC<GameBoardProps> = ({ mode }) => {
         <p className="endgame">Match Draw</p>
       ) : (
         <>
-          <div >
+          <div>
             <div className="row">
               <div className="square">
-                <Square value={squares[0]} onClick={() => handleClick(0)} />
+                <Square value={squares[0]} onClick={() => handleMove(0)} />
               </div>
               <div className="square">
-                <Square value={squares[1]} onClick={() => handleClick(1)} />
+                <Square value={squares[1]} onClick={() => handleMove(1)} />
               </div>
               <div className="square">
-                <Square value={squares[2]} onClick={() => handleClick(2)} />
+                <Square value={squares[2]} onClick={() => handleMove(2)} />
               </div>
             </div>
             <div className="row">
               <div className="square">
-                <Square value={squares[3]} onClick={() => handleClick(3)} />
+                <Square value={squares[3]} onClick={() => handleMove(3)} />
               </div>
               <div className="square">
-                <Square value={squares[4]} onClick={() => handleClick(4)} />
+                <Square value={squares[4]} onClick={() => handleMove(4)} />
               </div>
               <div className="square">
-                <Square value={squares[5]} onClick={() => handleClick(5)} />
+                <Square value={squares[5]} onClick={() => handleMove(5)} />
               </div>
             </div>
             <div className="row">
               <div className="square">
-                <Square value={squares[6]} onClick={() => handleClick(6)} />
+                <Square value={squares[6]} onClick={() => handleMove(6)} />
               </div>
               <div className="square">
-                <Square value={squares[7]} onClick={() => handleClick(7)} />
+                <Square value={squares[7]} onClick={() => handleMove(7)} />
               </div>
               <div className="square">
-                <Square value={squares[8]} onClick={() => handleClick(8)} />
+                <Square value={squares[8]} onClick={() => handleMove(8)} />
               </div>
             </div>
           </div>
         </>
       )}
-      <div className="history-div">
-        <h4>History</h4>
-        {history.map((_, move) => (
-          <div
-            key={move}
-            className="history-move"
-            onClick={() => {
-              if (!winner) {
-                handleHistory(move);
-              }
-            }}
-          >
-            {move <= 0 ? (
-              <div className="startGame">
-                <p>Start the game</p>
-              </div>
-            ) : (
-              <div className="moveNum">
-                <p>Go to move #{move} </p>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
       <div
         className="resetBtn"
         onClick={() => {
